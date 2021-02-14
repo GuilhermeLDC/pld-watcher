@@ -42,8 +42,8 @@ The watcher function receive a event like :
 ```
 
 Currently, any of these arguments are required. If *since* and *until* are not 
-passed, then the period used will be *since" = yesterday and *until* = today.
-However, if the *bucket" is not passed a bucket named *watcher-energy* will 
+passed, then the period used will be *since* = yesterday and *until* = today.
+However, if the *bucket* is not passed a bucket named *watcher-energy* will 
 be used. You can change the name of the bucket to another as long as
 a permisson to this new resource had been configured in *serverless.yml* 
 in *iamRoleStatements*.
