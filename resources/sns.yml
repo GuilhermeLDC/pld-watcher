@@ -1,0 +1,7 @@
+AlertTopic:
+  Type: AWS::SNS::Topic
+  Properties:
+    TopicName: AlertWatcher
+    Subscription:
+      - Endpoint: ${opt:email}
+        Protocol: email

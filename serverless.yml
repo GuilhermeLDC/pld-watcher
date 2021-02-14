@@ -1,0 +1,38 @@
+service: pld-watcher
+
+provider:
+  name: aws
+  runtime: python3.7
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'sa-east-1'}
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 
+        - s3:PutObject
+        - s3:PutObjectAcl
+      Resource: "arn:aws:s3:::watcher-energy/*"
+    - Effect: Allow
+      Action:
+        - SNS:Publish
+      Resource: !Ref AlertTopic
+
+custom:
+  pythonRequirements:
+    dockerizePip: false
+
+functions:
+  pldWatcher:
+    handler: src.watcher.handler
+    events:
+      - schedule: cron(0 0 * * ? *)
+    environment:
+      SNS_TOPIC_ARN: !Ref AlertTopic
+
+resources:
+  Resources:
+    ${file(resources/sns.yml)}
+      
+
+plugins:
+  - serverless-python-requirements
+
